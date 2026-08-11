@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2f6f45" />
+    <title>AI Crop Doctor — Snap. Diagnose. Act.</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <button class="brand" id="homeButton" aria-label="Go to home">
+          <span class="brand-mark">✚</span><span>AI Crop Doctor</span>
+        </button>
+        <button class="demo-toggle" id="demoToggle" type="button"><span>Demo mode</span><i></i></button>
+      </header>
+
+      <section class="screen active" id="homeScreen">
+        <div class="hero">
+          <div class="eyebrow"><span class="leaf">✦</span> FIELD ADVISORY</div>
+          <h1>Snap. Diagnose.<br /><em>Act.</em></h1>
+          <p>Clear crop guidance, timed for the weather.</p>
+          <button class="button button-primary button-large" id="startScan">Scan your crop <span>→</span></button>
+          <div class="location-chip" id="homeLocation">📍 Set your field location</div>
+        </div>
+
+        <section class="recent-card" id="recentCard">
+          <div class="section-label">HOW IT HELPS</div>
+          <div class="three-points">
+            <div><span>①</span><strong>See the problem</strong><small>Upload one affected leaf</small></div>
+            <div><span>②</span><strong>Get clear actions</strong><small>Simple, practical next steps</small></div>
+            <div><span>③</span><strong>Choose the right time</strong><small>Weather-aware treatment timing</small></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="screen" id="scanScreen">
+        <div class="screen-heading"><button class="back" data-home>←</button><div><div class="section-label">STEP 1 OF 1</div><h2>Check your crop</h2></div></div>
+        <div class="scan-layout">
+          <div class="form-card">
+            <label class="field-label">Crop photo</label>
+            <input class="file-input" id="photoInput" type="file" accept="image/*" capture="environment" />
+            <label class="upload-zone" for="photoInput" id="uploadZone">
+              <span class="upload-icon">⌁</span>
+              <strong>Add an affected leaf</strong>
+              <small>Use your camera or choose a photo</small>
+            </label>
+            <div class="preview-wrap hidden" id="previewWrap"><img id="imagePreview" alt="Selected crop leaf" /><button id="removePhoto" type="button" aria-label="Remove photo">×</button></div>
+            <p class="photo-tip">Tip: Hold one affected leaf close to the camera in good daylight.</p>
+
+            <label class="field-label" for="cropSelect">What are you growing?</label>
+            <select id="cropSelect"><option value="">Choose crop</option><option>Tomato</option><option>Rice</option><option>Cotton</option><option>Chilli</option><option>Maize</option><option>Potato</option><option>Groundnut</option><option>Other Crop</option></select>
+
+            <label class="field-label">Your field</label>
+            <div class="location-row"><button class="location-button" id="locationButton" type="button">⌖ <span id="locationLabel">Use current location</span></button><span class="or">or</span><input id="manualLocation" placeholder="Enter town or village" /></div>
+            <p class="field-message" id="formMessage" role="status"></p>
+            <button class="button button-primary full" id="diagnoseButton" type="button">Diagnose crop <span>→</span></button>
+          </div>
+
+          <aside class="demo-panel" id="demoPanel">
+            <div class="demo-badge">DEMO SCENARIOS</div>
+            <h3>A dependable field demo</h3>
+            <p>Choose a scenario to experience the complete advisory flow.</p>
+            <button class="scenario" data-scenario="tomato"><span>🍅</span><div><strong>Tomato · Early blight</strong><small>Rain expected</small></div><b>→</b></button>
+            <button class="scenario" data-scenario="rice"><span>🌾</span><div><strong>Rice · Leaf blast</strong><small>Clear treatment window</small></div><b>→</b></button>
+            <button class="scenario" data-scenario="cotton"><span>☘</span><div><strong>Cotton · Leaf spot</strong><small>High humidity warning</small></div><b>→</b></button>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen" id="advisoryScreen">
+        <div class="screen-heading"><button class="back" data-scan>←</button><div><div class="section-label">YOUR FIELD ADVISORY</div><h2>What to do next</h2></div><button class="new-scan" data-scan>New scan</button></div>
+        <div class="advisory-grid">
+          <article class="diagnosis-card">
+            <div class="diagnosis-top"><span class="crop-icon" id="resultEmoji">🍅</span><div><div class="confidence" id="confidenceLabel">HIGH CONFIDENCE</div><h1 id="diseaseName">Early Blight</h1></div><span class="severity" id="severity">Moderate</span></div>
+            <div class="confidence-bar"><i id="confidenceBar"></i></div><p class="confidence-number" id="confidenceText">91% confidence</p>
+            <div class="divider"></div>
+            <h3>🔎 What we found</h3><p id="findingText">Brown circular lesions and surrounding yellowing are consistent with early blight symptoms.</p>
+            <h3>💊 What you should do</h3><ol id="actionsList"></ol>
+          </article>
+
+          <div class="weather-column">
+            <article class="weather-card"><div class="weather-title"><div><div class="section-label">FIELD WEATHER</div><h3 id="weatherLocation">Vijayawada, Andhra Pradesh</h3></div><span class="weather-icon" id="weatherIcon">🌦️</span></div><div class="weather-stats"><div><strong id="temperature">29°</strong><span>Temperature</span></div><div><strong id="humidity">78%</strong><span>Humidity</span></div><div><strong id="rainChance">70%</strong><span>Rain chance</span></div><div><strong id="windSpeed">11</strong><span>Wind km/h</span></div></div><p id="weatherSummary">Rain is expected later today.</p></article>
+            <article class="timing-card"><div class="timing-icon">⏰</div><div><div class="section-label">BEST TIME TO ACT</div><h3 id="bestWindow">Tomorrow · 6:30–9:30 AM</h3><p id="timingReason">Drier conditions and gentler wind make this a safer treatment window.</p></div></article>
+            <article class="warning-card" id="warningCard"><div>⚠️</div><div><strong id="warningTitle">Avoid spraying tonight</strong><p id="warningText">Expected rainfall could wash off treatment and increase fungal spread.</p></div></article>
+            <p class="disclaimer">AI-generated advisory. For severe crop damage or an uncertain diagnosis, consult a qualified agricultural expert.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="loading hidden" id="loading"><div class="loader-leaf">✦</div><strong>Checking your crop and weather…</strong><span>Creating a clear field advisory</span></div>
+    <script src="app.js"></script>
+  </body>
+</html>
